@@ -1,1 +1,6 @@
+@import "{{ site.theme }}";
 
+@font-face {
+	font-family: "Brie";
+	src: url("asstes/font/BRI293.TTF");
+}
