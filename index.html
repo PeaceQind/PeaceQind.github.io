@@ -1,16 +1,11 @@
 <!DOCTYPE html>
 <html>
+<head>
     <meta charset="utf-8"> 
     <title>PeaceQ's Blog</title>
-<head>
     <style>
-        /* 正确定义字体 */
-        @font-face {
-            font-family: 'Brie';
-            src: url('https://raw.githubusercontent.com/PeaceQind/PeaceQind.github.io/main/asstes/font/%E5%B9%B3%E6%BB%91%E5%AD%97%E4%BD%93BRI293.TTF') format('truetype');
-        }
-        
-        .circular-image { /*头像图片*/
+        /* 移除原字体定义，改为动态加载 */
+        .circular-image {
             position: absolute;
             left: 11%;
             top: 20%;
@@ -19,7 +14,7 @@
             border-radius: 50%;
             background-color: #f0f0f0;
             overflow: hidden;
-            border: 2px solid #333;
+            border: 1.5px solid #333;
         }
         
         .circular-image img { 
@@ -28,11 +23,11 @@
             object-fit: cover;
         }
         
-        .image-text { /*用户名文字*/
+        .image-text {
             position: absolute;
             left: 11%;
             top: 35%;
-            font-family: 'Brie', sans-serif;
+            font-family: 'Brie', sans-serif; /* 动态加载的字体 */
             font-size: 25px;
             font-weight: bold;
             color: black;
@@ -40,56 +35,15 @@
             width: 100px;
         }
 
-        .custom-image { /*GithubPage图标*/
+        .custom-image {
             position: absolute;
-            left: 8%;
-            top: -6%;
+            left: 7%;
+            top: 1.5%;
             width: 150px;
-            height: 150px;
+            height: auto;
         }
-    </style>
-</head>
-<body>
-    <div class="circular-image">
-        <img src="https://avatars.githubusercontent.com/u/201522321?s=400&u=e0cc84ceb3f3d1445e3fb70ecd3ad70226288c99&v=4" alt="圆形图片">
-    </div>
-    <div class="image-text">PeaceQ</div>
 
-    <div class="vertical-line"></div>
-    <div class="horizontal-line"></div>
-    <img class="custom-image" id="customImage" src="https://simpleicons.org/icons/githubpages.svg" alt="Custom Image">
-
-    <script>
-        // 获取图片元素
-        const customImage = document.getElementById('customImage');
-        const defaultSrc = 'https://raw.githubusercontent.com/PeaceQind/PeaceQind.github.io/main/asstes/icon/githubpages.svg';
-        const fallbackSrc = 'https://simpleicons.org/icons/githubpages.svg';
-        // 设置超时时间（例如3秒）
-        const timeout = 3000;
-        // 创建一个Image对象用于检测加载
-        const img = new Image();
-        img.src = defaultSrc;
-        // 监听加载事件
-        img.onload = function() {
-            // 如果成功加载，默认图片已经显示，无需操作
-        };
-        // 监听错误事件
-        img.onerror = function() {
-            // 如果加载失败，切换到备用图片
-            customImage.src = fallbackSrc;
-        };
-        // 设置超时检测
-        setTimeout(function() {
-            // 如果超时后图片仍未加载完成，切换到备用图片
-            if (customImage.src === defaultSrc) {
-                customImage.src = fallbackSrc;
-            }
-        }, timeout);
-    </script>
-</body>
-<head>
-    <style>
-        .vertical-line { /*侧线*/
+        .vertical-line {
             position: absolute;
             left: 30%;
             top: 0;
@@ -98,7 +52,7 @@
             background-color: black;
         }
         
-        .horizontal-line { /*顶部线*/
+        .horizontal-line {
             position: absolute;
             top: 7%;
             left: 0;
@@ -108,4 +62,92 @@
         }
     </style>
 </head>
+<body>
+    <div class="circular-image">
+        <img src="https://avatars.githubusercontent.com/u/201522321?s=400&u=e0cc84ceb3f3d1445e3fb70ecd3ad70226288c99&v=4" alt="用户头像">
+    </div>
+    <div class="image-text">PeaceQ</div>
+
+    <div class="vertical-line"></div>
+    <div class="horizontal-line"></div>
+    <img class="custom-image" id="customImage" alt="GitHub Page 图标">
+
+    <script>
+        // 字体加载器
+        (function() {
+            // 字体配置
+            const fontSources = {
+                direct: 'https://cdn.jsdelivr.net/gh/PeaceQind/PeaceQind.github.io/asstes/font/BRI293.TTF',
+                fallback: 'asstes/font/BRI293.TTF'
+            };
+
+            // 创建字体加载承诺
+            const loadFont = (source) => {
+                return new Promise((resolve, reject) => {
+                    const font = new FontFace('Brie', `url(${source})`, {
+                        style: 'normal',
+                        weight: '400'
+                    });
+
+                    font.load().then(loadedFont => {
+                        document.fonts.add(loadedFont);
+                        resolve(source);
+                        console.log(`字体加载成功: ${source}`);
+                    }).catch(err => {
+                        console.warn(`字体加载失败: ${source}`);
+                        reject(err);
+                    });
+                });
+            };
+
+            // 启动竞速加载
+            Promise.race([
+                loadFont(fontSources.direct),
+                loadFont(fontSources.fallback)
+            ]).then(loadedSource => {
+                console.log(`使用字体源: ${loadedSource}`);
+                // 触发页面重绘
+                document.body.style.fontFamily = 'Brie';
+            }).catch(err => {
+                console.error('所有字体源加载失败:', err);
+            });
+        })();
+
+        // 图片加载器（优化版）
+        (function() {
+            const customImage = document.getElementById('customImage');
+            
+            // 图片源配置
+            const imgSources = {
+                direct: [
+                    'https://cdn.jsdelivr.net/gh/PeaceQind/PeaceQind.github.io/asstes/icon/githubpages.svg',
+                    // 可添加更多直接源
+                ],
+                fallback: 'asstes/icon/githubpages.svg'
+            };
+
+            // 创建图片加载承诺
+            const loadImage = (src) => {
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.onload = () => resolve(src);
+                    img.onerror = (err) => reject(err);
+                    img.src = src;
+                });
+            };
+
+            // 启动竞速加载
+            Promise.race([
+                ...imgSources.direct.map(src => loadImage(src)),
+                loadImage(imgSources.fallback)
+            ]).then(loadedSrc => {
+                customImage.src = loadedSrc;
+                console.log(`图片加载成功: ${loadedSrc}`);
+            }).catch(err => {
+                console.error('所有图片源加载失败:', err);
+                customImage.style.display = 'none';
+            });
+        })();
+    </script>
+</body>
 </html>
