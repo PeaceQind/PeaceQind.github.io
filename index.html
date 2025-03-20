@@ -4,6 +4,123 @@
     <meta charset="utf-8"> 
     <title>PeaceQ</title>
     <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        #container {
+            display: flex;
+            flex: 1;
+        }
+
+        #header {
+            background-color: #f0f0f0;
+            color: #333;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        #menu {
+            background-color: #f0f0f0;
+            color: #333;
+            width: 200px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            position: fixed;
+            height: 100vh;
+        }
+
+        #menu h3 {
+            margin: 0 0 10px 0;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        #menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        #menu ul li {
+            margin: 5px 0;
+        }
+
+        #menu ul li a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 5px 0;
+            font-size: 16px;
+        }
+
+        #menu ul li a:hover {
+            background-color: #ddd;
+        }
+
+        #content {
+            background-color: #f0f0f0;
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            margin-left: 240px;
+        }
+
+        #footer {
+            background-color: #f0f0f0;
+            color: #333;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+        }
+
+        .letter {
+            margin: 0 5px;
+            font-size: 48px;
+            color: #333;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .letter.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-text {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .content-text.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 600px) {
+            .letter {
+                font-size: 36px;
+            }
+        }
+    </style>
+    <style>
         /* 移除原字体定义，改为动态加载 */
         .circular-image {
             position: absolute;
@@ -150,6 +267,118 @@
                 customImage.style.display = 'none';
             });
         })();
+    </script>
+    <div id="header">
+        <h1>PeaceQ's Blog</h1>
+    </div>
+    <div id="container">
+        <div id="menu">
+            <h3>Navigation</h3>
+            <ul>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#background">Background</a></li>
+                <li><a href="#methods">Methods</a></li>
+                <li><a href="#results">Results</a></li>
+                <li><a href="#discussion">Discussion</a></li>
+                <li><a href="#conclusion">Conclusion</a></li>
+            </ul>
+        </div>
+        <div id="content">
+            <div id="textContainer"></div>
+            <div class="inner-content">
+                <h2 id="introduction" class="content-text">Introduction</h2>
+                <p class="content-text">
+                    Welcome to PeaceQ's Blog. This is a demonstration of a split text animation effect using pure HTML and CSS.
+                </p>
+                <h2 id="background" class="content-text">Background</h2>
+                <p class="content-text">
+                    The split text effect is a popular animation technique used to create engaging and visually appealing content on web pages. It involves breaking down text into individual characters or words and animating them separately.
+                </p>
+                <h2 id="methods" class="content-text">Methods</h2>
+                <p class="content-text">
+                    This effect can be achieved using CSS animations and transitions. Each character is wrapped in a span element, allowing individual control over its styling and animation.
+                </p>
+                <h2 id="results" class="content-text">Results</h2>
+                <p class="content-text">
+                    The result is a smooth and visually appealing animation that draws the user's attention to the text content. This can enhance the user experience and make the content more memorable.
+                </p>
+                <h2 id="discussion" class="content-text">Discussion</h2>
+                <p class="content-text">
+                    The split text animation can be customized in various ways, such as adjusting the animation timing, easing functions, and visual effects. It can be used for headers, titles, or any important text content that you want to highlight.
+                </p>
+                <h2 id="conclusion" class="content-text">Conclusion</h2>
+                <p class="content-text">
+                    In conclusion, the split text animation is a powerful tool for creating engaging web content. By using pure HTML and CSS, you can achieve this effect without relying on external libraries or frameworks.
+                </p>
+            </div>
+        </div>
+        <div id="footer">
+            Copyright © PeaceQ
+        </div>
+    </div>
+
+    <script>
+        const text = "Welcome to PeaceQ's Blog";
+        const textContainer = document.getElementById('textContainer');
+        const blogContainer = document.getElementById('content');
+        const sidebar = document.getElementById('menu');
+        const header = document.getElementById('header');
+        const footer = document.getElementById('footer');
+
+        function splitAndAnimateText() {
+            const textContainerStyle = textContainer.style;
+            textContainerStyle.display = 'flex';
+            textContainerStyle.justifyContent = 'center';
+            textContainerStyle.alignItems = 'center';
+            textContainerStyle.height = '100vh';
+            textContainerStyle.width = '100%';
+            textContainerStyle.position = 'fixed';
+            textContainerStyle.top = '0';
+            textContainerStyle.left = '0';
+            textContainerStyle.zIndex = '1000';
+            textContainerStyle.background = 'rgba(255, 255, 255, 0.9)';
+            textContainerStyle.backdropFilter = 'blur(5px)';
+
+            [...text].forEach((char, index) => {
+                const letterElement = document.createElement('span');
+                letterElement.textContent = char;
+                letterElement.className = 'letter';
+                textContainer.appendChild(letterElement);
+
+                setTimeout(() => {
+                    letterElement.classList.add('show');
+                }, 100 * index);
+            });
+
+            setTimeout(() => {
+                textContainerStyle.display = 'none';
+                blogContainer.style.display = 'block';
+                blogContainer.style.opacity = 1;
+                sidebar.style.display = 'flex';
+                sidebar.style.opacity = 1;
+                header.style.display = 'block';
+                showContentText();
+            }, 100 * text.length + 1000);
+        }
+
+        function showContentText() {
+            const contentTexts = document.querySelectorAll('.content-text');
+            contentTexts.forEach((text, index) => {
+                setTimeout(() => {
+                    text.classList.add('show');
+                }, 100 * index);
+            });
+        }
+
+        splitAndAnimateText();
+
+        window.addEventListener('scroll', () => {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+                footer.style.display = 'block';
+            } else {
+                footer.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
