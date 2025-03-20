@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8"> 
-    <title>PeaceQ</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeaceQ's Blog</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             background-color: #f0f0f0;
             display: flex;
@@ -19,32 +20,36 @@
         }
 
         #header {
-            background-color: #f0f0f0;
-            color: #333;
-            padding: 10px;
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
             text-align: center;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
+            border-bottom: 1px solid #e9ecef;
         }
 
         #menu {
-            background-color: #f0f0f0;
-            color: #333;
-            width: 200px;
-            padding: 20px;
+            background-color: #f8f9fa;
+            border-right: 1px solid #e9ecef;
+            width: 220px;
+            padding: 25px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
-            position: fixed;
             height: 100vh;
+            position: fixed;
+            top: 0;
+            overflow-y: auto;
         }
 
         #menu h3 {
-            margin: 0 0 10px 0;
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 15px;
+            font-size: 20px;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 10px;
         }
 
         #menu ul {
@@ -63,29 +68,55 @@
             color: #333;
             text-decoration: none;
             display: block;
-            padding: 5px 0;
+            padding: 8px 15px;
             font-size: 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
         }
 
         #menu ul li a:hover {
-            background-color: #ddd;
+            background-color: #e9ecef;
+            color: #007bff;
         }
 
         #content {
-            background-color: #f0f0f0;
+            background-color: #ffffff;
             flex: 1;
-            padding: 20px;
+            padding: 30px;
             overflow-y: auto;
             margin-left: 240px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            min-height: calc(100vh - 70px);
+        }
+
+        .inner-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .inner-content h2 {
+            color: #343a40;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+
+        .inner-content p {
+            margin-bottom: 15px;
+            color: #495057;
         }
 
         #footer {
-            background-color: #f0f0f0;
-            color: #333;
-            padding: 10px;
+            background-color: #f8f9fa;
+            color: #6c757d;
+            padding: 15px;
             text-align: center;
             font-size: 14px;
-            display: none;
+            border-top: 1px solid #e9ecef;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
 
         .letter {
@@ -119,160 +150,70 @@
                 font-size: 36px;
             }
         }
-    </style>
-    <style>
-        /* 移除原字体定义，改为动态加载 */
+
         .circular-image {
-            position: absolute;
-            left: 11%;
-            top: 20%;
+            position: relative;
             width: 100px;
             height: 100px;
             border-radius: 50%;
             background-color: #f0f0f0;
             overflow: hidden;
             border: 1.5px solid #333;
+            margin-bottom: 20px;
         }
-        
-        .circular-image img { 
+
+        .circular-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
-        .image-text {
-            position: absolute;
-            left: 11%;
-            top: 35%;
-            font-family: 'Brie', sans-serif; /* 动态加载的字体 */
-            font-size: 25px;
-            font-weight: bold;
-            color: black;
-            text-align: center;
-            width: 100px;
+
+        @media (max-width: 992px) {
+            #menu {
+                width: 200px;
+            }
+
+            #content {
+                margin-left: 220px;
+            }
+
+            .circular-image {
+                width: 100px;
+                height: 100px;
+            }
         }
 
-        .custom-image {
-            position: absolute;
-            left: 7%;
-            top: 1%;
-            width: 150px;
-            height: auto;
-        }
+        @media (max-width: 768px) {
+            #menu {
+                width: 180px;
+                position: static;
+                height: auto;
+                padding: 15px;
+                border-right: none;
+                border-bottom: 1px solid #e9ecef;
+            }
 
-        .vertical-line {
-            position: absolute;
-            left: 30%;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background-color: black;
-        }
-        
-        .horizontal-line {
-            position: absolute;
-            top: 7%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background-color: black;
+            #content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .circular-image {
+                width: 80px;
+                height: 80px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="circular-image">
-        <img src="https://avatars.githubusercontent.com/u/201522321?s=400&u=e0cc84ceb3f3d1445e3fb70ecd3ad70226288c99&v=4" alt="用户头像">
-    </div>
-    <div class="image-text">PeaceQ</div>
-
-    <div class="vertical-line"></div>
-    <div class="horizontal-line"></div>
-    <a href="https://docs.github.com/zh/pages/getting-started-with-github-pages/about-github-pages" target="_blank">
-        <img class="custom-image" id="customImage" alt="GitHub Page 图标">
-    </a>
-
-    <script>
-        // 字体加载器
-        (function() {
-            // 字体配置
-            const fontSources = {
-                direct: 'https://cdn.jsdelivr.net/gh/PeaceQind/PeaceQind.github.io/asstes/font/BRI293.TTF',
-                fallback: 'asstes/font/BRI293.TTF'
-            };
-
-            // 创建字体加载承诺
-            const loadFont = (source) => {
-                return new Promise((resolve, reject) => {
-                    const font = new FontFace('Brie', `url(${source})`, {
-                        style: 'normal',
-                        weight: '400'
-                    });
-
-                    font.load().then(loadedFont => {
-                        document.fonts.add(loadedFont);
-                        resolve(source);
-                        console.log(`字体加载成功: ${source}`);
-                    }).catch(err => {
-                        console.warn(`字体加载失败: ${source}`);
-                        reject(err);
-                    });
-                });
-            };
-
-            // 启动竞速加载
-            Promise.race([
-                loadFont(fontSources.direct),
-                loadFont(fontSources.fallback)
-            ]).then(loadedSource => {
-                console.log(`使用字体源: ${loadedSource}`);
-                // 触发页面重绘
-                document.body.style.fontFamily = 'Brie';
-            }).catch(err => {
-                console.error('所有字体源加载失败:', err);
-            });
-        })();
-
-        // 图片加载器（优化版）a
-        (function() {
-            const customImage = document.getElementById('customImage');
-            
-            // 图片源配置
-            const imgSources = {
-                direct: [
-                    /*'https://cdn.jsdelivr.net/gh/PeaceQind/PeaceQind.github.io/asstes/icon/githubpages.svg'*/
-                    'https://cdn.jsdelivr.net/gh/PeaceQind/PeaceQind.github.io/asstes/icon/PeaceQTitle.svg'
-                ],
-                fallback: 'asstes/icon/PeaceQTitle.svg'
-            };
-
-            // 创建图片加载承诺
-            const loadImage = (src) => {
-                return new Promise((resolve, reject) => {
-                    const img = new Image();
-                    img.onload = () => resolve(src);
-                    img.onerror = (err) => reject(err);
-                    img.src = src;
-                });
-            };
-
-            // 启动竞速加载
-            Promise.race([
-                ...imgSources.direct.map(src => loadImage(src)),
-                loadImage(imgSources.fallback)
-            ]).then(loadedSrc => {
-                customImage.src = loadedSrc;
-                console.log(`图片加载成功: ${loadedSrc}`);
-            }).catch(err => {
-                console.error('所有图片源加载失败:', err);
-                customImage.style.display = 'none';
-            });
-        })();
-    </script>
     <div id="header">
         <h1>PeaceQ's Blog</h1>
     </div>
     <div id="container">
         <div id="menu">
+            <div class="circular-image">
+                <img src="https://avatars.githubusercontent.com/u/201522321?s=400&u=e0cc84ceb3f3d1445e3fb70ecd3ad70226288c99&v=4" alt="用户头像">
+            </div>
             <h3>Navigation</h3>
             <ul>
                 <li><a href="#introduction">Introduction</a></li>
@@ -281,6 +222,7 @@
                 <li><a href="#results">Results</a></li>
                 <li><a href="#discussion">Discussion</a></li>
                 <li><a href="#conclusion">Conclusion</a></li>
+                <li><a href="#end"> </a></li>
             </ul>
         </div>
         <div id="content">
@@ -310,15 +252,51 @@
                 <p class="content-text">
                     In conclusion, the split text animation is a powerful tool for creating engaging web content. By using pure HTML and CSS, you can achieve this effect without relying on external libraries or frameworks.
                 </p>
+                <h2 id="end" cladd="content-text"> </h2>
+                <p> Copyright © PeaceQ </p>
             </div>
         </div>
-        <div id="footer">
-            Copyright © PeaceQ
-        </div>
     </div>
+    <!-- <div id="footer">
+        Copyright © PeaceQ
+    </div> -->
 
     <script>
-        const text = "Welcome to PeaceQ's Blog";
+        // 字体加载器
+        (function() {
+            const fontSources = {
+                direct: 'https://cdn.jsdelivr.net/gh/PeaceQind/PeaceQind.github.io/asstes/font/BRI293.TTF',
+                fallback: 'asstes/font/BRI293.TTF'
+            };
+
+            const loadFont = (source) => {
+                return new Promise((resolve, reject) => {
+                    const font = new FontFace('Brie', `url(${source})`, {
+                        style: 'normal',
+                        weight: '400'
+                    });
+
+                    font.load().then(loadedFont => {
+                        document.fonts.add(loadedFont);
+                        resolve(source);
+                    }).catch(err => {
+                        reject(err);
+                    });
+                });
+            };
+
+            Promise.race([
+                loadFont(fontSources.direct),
+                loadFont(fontSources.fallback)
+            ]).then(loadedSource => {
+                document.body.style.fontFamily = 'Brie, Segoe UI, Tahoma, Geneva, Verdana, sans-serif';
+            }).catch(err => {
+                document.body.style.fontFamily = 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif';
+            });
+        })();
+
+        // 动画效果
+        const text = "Welcome";
         const textContainer = document.getElementById('textContainer');
         const blogContainer = document.getElementById('content');
         const sidebar = document.getElementById('menu');
@@ -336,8 +314,8 @@
             textContainerStyle.top = '0';
             textContainerStyle.left = '0';
             textContainerStyle.zIndex = '1000';
-            textContainerStyle.background = 'rgba(255, 255, 255, 0.9)';
-            textContainerStyle.backdropFilter = 'blur(5px)';
+            textContainerStyle.background = 'linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)';
+            textContainerStyle.backdropFilter = 'blur(10px)';
 
             [...text].forEach((char, index) => {
                 const letterElement = document.createElement('span');
@@ -347,7 +325,7 @@
 
                 setTimeout(() => {
                     letterElement.classList.add('show');
-                }, 100 * index);
+                }, 150 * index);
             });
 
             setTimeout(() => {
@@ -358,7 +336,7 @@
                 sidebar.style.opacity = 1;
                 header.style.display = 'block';
                 showContentText();
-            }, 100 * text.length + 1000);
+            }, 150 * text.length + 1500);
         }
 
         function showContentText() {
@@ -366,19 +344,11 @@
             contentTexts.forEach((text, index) => {
                 setTimeout(() => {
                     text.classList.add('show');
-                }, 100 * index);
+                }, 200 * index);
             });
         }
 
         splitAndAnimateText();
-
-        window.addEventListener('scroll', () => {
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-                footer.style.display = 'block';
-            } else {
-                footer.style.display = 'none';
-            }
-        });
     </script>
 </body>
 </html>
